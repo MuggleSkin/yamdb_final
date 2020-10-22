@@ -2,6 +2,8 @@
 
 YaMDb is a database which contains reviews about movies, books and music.
 
+![YaMDb workflow](https://github.com/MuggleSkin/yamdb_final/workflows/YaMDb_workflow/badge.svg)
+
 ## Getting Started
 
 Download this project on your local machine or remote server. 
@@ -79,5 +81,3 @@ docker-compose exec db psql --username=your_username --dbname=your_dbname
 ## Built With
 
 [Yandex Praktikum](https://praktikum.yandex.ru) - Online educational service
-
-![YaMDb workflow](https://github.com/MuggleSkin/yamdb_final/workflows/YaMDb%20workflow/badge.svg)

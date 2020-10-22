@@ -12,9 +12,8 @@ from .models import Review, Comment, Category, Genre, Title, CustomUser
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        slug_field="username", read_only=True
-    )
+    author = serializers.SlugRelatedField(slug_field="username",
+                                          read_only=True)
 
     class Meta:
         fields = ("id", "text", "author", "score", "pub_date")
@@ -29,9 +28,8 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        slug_field="username", read_only=True
-    )
+    author = serializers.SlugRelatedField(slug_field="username",
+                                          read_only=True)
 
     class Meta:
         fields = ("id", "text", "author", "pub_date")
@@ -54,13 +52,12 @@ class GenreSerializer(serializers.HyperlinkedModelSerializer):
 
 class TitlesSerializer(serializers.ModelSerializer):
     rating = serializers.FloatField(read_only=True)
-    category = serializers.SlugRelatedField(
-        slug_field="slug", queryset=Category.objects.all()
-    )
+    category = serializers.SlugRelatedField(slug_field="slug",
+                                            queryset=Category.objects.all())
 
-    genre = serializers.SlugRelatedField(
-        slug_field="slug", queryset=Genre.objects.all(), many=True
-    )
+    genre = serializers.SlugRelatedField(slug_field="slug",
+                                         queryset=Genre.objects.all(),
+                                         many=True)
 
     class Meta:
         model = Title
@@ -107,17 +104,17 @@ def decode(text):
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ("email",)
+        fields = ("email", )
 
     def create(self, validated_data):
         email = validated_data["email"]
         if email and User.objects.filter(email=email).exists():
             raise serializers.ValidationError(
-                {"email": "Email addresses must be unique."}
-            )
-        user = CustomUser.objects.create(
-            username=email, email=email, is_active=False, role="user"
-        )
+                {"email": "Email addresses must be unique."})
+        user = CustomUser.objects.create(username=email,
+                                         email=email,
+                                         is_active=False,
+                                         role="user")
 
         request = self.context.get("request")
         current_site = get_current_site(request)
@@ -158,7 +155,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         if "username" in data:
             user = CustomUser.objects.filter(username=data["username"]).first()
             if user:
-                raise serializers.ValidationError(f"Username should be unique")
+                raise serializers.ValidationError("Username should be unique")
         return data
 
 
@@ -185,6 +182,5 @@ class MyAuthTokenSerializer(serializers.ModelSerializer):
                 return data
         else:
             raise serializers.ValidationError(
-                {"token": "User already has token."}
-            )
+                {"token": "User already has token."})
         return data

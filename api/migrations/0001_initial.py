@@ -33,15 +33,16 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "last_login",
-                    models.DateTimeField(
-                        blank=True, null=True, verbose_name="last login"
-                    ),
+                    models.DateTimeField(blank=True,
+                                         null=True,
+                                         verbose_name="last login"),
                 ),
                 (
                     "is_superuser",
                     models.BooleanField(
                         default=False,
-                        help_text="Designates that this user has all permissions without explicitly assigning them.",
+                        help_text="Designates that this user has all \
+                            permissions without explicitly assigning them.",
                         verbose_name="superuser status",
                     ),
                 ),
@@ -68,7 +69,9 @@ class Migration(migrations.Migration):
                     "groups",
                     models.ManyToManyField(
                         blank=True,
-                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                        help_text="The groups this user belongs to. A user \
+                            will get all permissions granted \
+                            to each of their groups.",
                         related_name="user_set",
                         related_query_name="user",
                         to="auth.Group",
@@ -87,7 +90,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="Category",
@@ -148,9 +153,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "genre",
-                    models.ManyToManyField(
-                        blank=True, related_name="titles", to="api.Genre"
-                    ),
+                    models.ManyToManyField(blank=True,
+                                           related_name="titles",
+                                           to="api.Genre"),
                 ),
             ],
         ),
@@ -213,7 +218,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"unique_together": {("author", "title")},},
+            options={
+                "unique_together": {("author", "title")},
+            },
         ),
         migrations.CreateModel(
             name="Comment",

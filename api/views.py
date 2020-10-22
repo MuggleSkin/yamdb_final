@@ -80,9 +80,8 @@ class CommentViewSet(ModelViewSet):
         serializer.save(author=self.request.user, review=self.get_review())
 
 
-class CategoriesViewSet(
-    CreateModelMixin, ListModelMixin, DestroyModelMixin, GenericViewSet
-):
+class CategoriesViewSet(CreateModelMixin, ListModelMixin, DestroyModelMixin,
+                        GenericViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     lookup_field = "slug"
@@ -93,9 +92,8 @@ class CategoriesViewSet(
     permission_classes = [IsStaffOrReadOnly]
 
 
-class GenresViewSet(
-    CreateModelMixin, ListModelMixin, DestroyModelMixin, GenericViewSet
-):
+class GenresViewSet(CreateModelMixin, ListModelMixin, DestroyModelMixin,
+                    GenericViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     lookup_field = "slug"
@@ -112,9 +110,8 @@ class TitlesViewSet(ModelViewSet):
     permission_classes = [IsStaffOrReadOnly]
 
     def get_queryset(self):
-        queryset = (
-            super().get_queryset().annotate(rating=Avg(F("reviews__score")))
-        )
+        queryset = (super().get_queryset().annotate(
+            rating=Avg(F("reviews__score"))))
         category = self.request.query_params.get("category", None)
         genre = self.request.query_params.get("genre", None)
         name = self.request.query_params.get("name", None)
@@ -153,9 +150,9 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
         return self.queryset.get(username=self.kwargs["username"])
 
     def partial_update(self, request, *args, **kwargs):
-        serializer = CustomUserSerializer(
-            self.get_object(), data=request.data, partial=True
-        )
+        serializer = CustomUserSerializer(self.get_object(),
+                                          data=request.data,
+                                          partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

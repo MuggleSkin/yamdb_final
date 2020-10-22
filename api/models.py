@@ -49,8 +49,11 @@ class Genre(models.Model):
 
 
 class Title(models.Model):
-    name = models.CharField(max_length=200,)
-    year = models.SmallIntegerField(null=True, blank=True,)
+    name = models.CharField(max_length=200, )
+    year = models.SmallIntegerField(
+        null=True,
+        blank=True,
+    )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
@@ -71,17 +74,18 @@ class Review(models.Model):
     text = models.TextField()
     score = models.PositiveSmallIntegerField(
         choices=SCORE_CHOICES,
-        validators=[MinValueValidator(1), MaxValueValidator(10)],
+        validators=[MinValueValidator(1),
+                    MaxValueValidator(10)],
     )
-    pub_date = models.DateTimeField(
-        "Дата публикации", auto_now_add=True, db_index=True
-    )
-    author = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="reviews"
-    )
-    title = models.ForeignKey(
-        Title, on_delete=models.CASCADE, related_name="reviews"
-    )
+    pub_date = models.DateTimeField("Дата публикации",
+                                    auto_now_add=True,
+                                    db_index=True)
+    author = models.ForeignKey(CustomUser,
+                               on_delete=models.CASCADE,
+                               related_name="reviews")
+    title = models.ForeignKey(Title,
+                              on_delete=models.CASCADE,
+                              related_name="reviews")
 
     class Meta:
         unique_together = ("author", "title")
@@ -92,15 +96,15 @@ class Review(models.Model):
 
 class Comment(models.Model):
     text = models.TextField()
-    pub_date = models.DateTimeField(
-        "Дата публикации", auto_now_add=True, db_index=True
-    )
-    author = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="comments"
-    )
-    review = models.ForeignKey(
-        Review, on_delete=models.CASCADE, related_name="comments"
-    )
+    pub_date = models.DateTimeField("Дата публикации",
+                                    auto_now_add=True,
+                                    db_index=True)
+    author = models.ForeignKey(CustomUser,
+                               on_delete=models.CASCADE,
+                               related_name="comments")
+    review = models.ForeignKey(Review,
+                               on_delete=models.CASCADE,
+                               related_name="comments")
 
     def __str__(self):
         return self.text
@@ -116,8 +120,8 @@ def encode(text):
 @receiver(pre_save, sender=CustomUser)
 def create_code(sender, instance, **kwargs):
     confirmation_code = "".join(
-        random.choice(string.ascii_uppercase + string.digits) for _ in range(8)
-    )
+        random.choice(string.ascii_uppercase + string.digits)
+        for _ in range(8))
     instance.confirmation_code = encode(confirmation_code)
     return instance
 
