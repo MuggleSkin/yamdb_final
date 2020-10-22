@@ -23,9 +23,9 @@ class TestWorkflow:
         assert (
             "pytest" in yamdb
         ), "Проверьте, что добавили pytest в файл yamdb_workflow.yaml"
-        """assert (
+        assert (
             "appleboy/ssh-action" in yamdb
-        ), "Проверьте, что добавили деплой в файл yamdb_workflow.yaml"""
+        ), "Проверьте, что добавили деплой в файл yamdb_workflow.yaml"
         assert "appleboy/telegram-action" in yamdb, (
             "Проверьте, что добавили доставку отправку telegram сообщения "
             "в файл yamdb_workflow.yaml"

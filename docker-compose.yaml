@@ -6,12 +6,14 @@ volumes:
 services:
   db:
     image: postgres:12.4
+    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
+      
   web:
-    image: muggleskin/yamdb_final:latest
+    image: muggleskin/yamdb_final_web:latest
     restart: always
     expose:
       - 8000
@@ -21,8 +23,10 @@ services:
       - db
     env_file:
       - ./.env
+
   nginx:
-    build: ./nginx
+    build: muggleskin/yamdb_final_nginx:latest
+    restart: always
     ports:
       - 80:80
     volumes:
