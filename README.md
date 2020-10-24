@@ -1,8 +1,8 @@
 # REST API for YaMDb
 
-YaMDb is a database which contains reviews about movies, books and music.
-
 ![YaMDb workflow](https://github.com/MuggleSkin/yamdb_final/workflows/YaMDb_workflow/badge.svg)
+
+YaMDb is a database which contains reviews about movies, books and music.
 
 ## Getting Started
 
@@ -33,12 +33,6 @@ docker-compose restart
 ```
 
 ### Installing
-
-Migrate your django models:
-
-```
-docker-compose exec web python manage.py migrate
-```
 
 (Optionally) Fill your database with test data from fixtures.json:
 
