@@ -2,6 +2,7 @@ version: '3.7'
 
 volumes:
   postgres_data:
+  static:
 
 services:
   db:
@@ -9,8 +10,8 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./.env
       
   web:
     image: muggleskin/yamdb_final_web:latest
@@ -18,9 +19,16 @@ services:
     expose:
       - 8000
     volumes:
-      - ./static:/code/static
+      - static:/code/static
     depends_on:
       - db
+    env_file:
+      - ./.env
+    command: >
+      bash -c "python manage.py makemigrations --no-input
+      && python manage.py migrate --no-input
+      && python manage.py collectstatic --no-input
+      && gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000"
 
   nginx:
     image: muggleskin/yamdb_final_nginx:latest
@@ -28,6 +36,6 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./static:/code/static
+      - static:/code/static
     depends_on:
       - web
