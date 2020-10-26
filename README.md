@@ -6,44 +6,45 @@ YaMDb is a database which contains reviews about movies, books and music.
 
 ## Getting Started
 
-Download this project on your local machine or remote server. 
+Install docker:
+
+[Install docker engine](https://docs.docker.com/engine/install/)
+
+and docker-engine:
+
+[Install docker-compose](https://docs.docker.com/compose/install/)
+
+Download this github project on your local machine or remote server. 
 
 Create ".env" file in the root directory of your project and fill it with required environment variables:
 
 ```
 DB_ENGINE=django.db.backends.postgresql
-DB_NAME=your_db_name
+POSTGRES_DB=your_db_name
 POSTGRES_USER=your_postgres_user
 POSTGRES_PASSWORD=your_postgres_password
 DB_HOST=db
 DB_PORT=5432
 ```
-but make sure DB_NAME and POSTGRES_USER are the same to avoid excessive database creation.
+
+### Deploying
 
 Open terminal to create and start new containers with docker-compose:
 
 ```
-docker-compose up
+sudo docker-compose up -d
 ```
-
-If something goes wrong with deploying of containers - restart them:
-
-```
-docker-compose restart
-```
-
-### Installing
 
 (Optionally) Fill your database with test data from fixtures.json:
 
 ```
-docker-compose exec web python manage.py loaddata fixtures.json
+sudo docker-compose exec web python manage.py loaddata fixtures.json
 ```
 
 Create superuser to be able to moderate resources:
 
 ```
-docker-compose exec web python manage.py createsuperuser
+sudo docker-compose exec web python manage.py createsuperuser
 ```
 
 and follow the further instructions.
@@ -69,7 +70,7 @@ http://127.0.0.1/admin/
 You can inspect database using db service:
 
 ```
-docker-compose exec db psql --username=your_username --dbname=your_dbname
+sudo docker-compose exec db psql your_db_name your_postgres_user
 ```
 
 ## Built With
