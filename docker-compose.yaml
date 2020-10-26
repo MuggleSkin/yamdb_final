@@ -31,11 +31,14 @@ services:
       && gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000"
 
   nginx:
-    image: muggleskin/yamdb_final_nginx:latest
+    image: nginx
     restart: always
     ports:
       - 80:80
     volumes:
+      - ./nginx_templates:/etc/nginx/templates
       - static:/code/static
+    env_file:
+      - ./.env
     depends_on:
       - web

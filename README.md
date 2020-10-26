@@ -6,11 +6,11 @@ YaMDb is a database which contains reviews about movies, books and music.
 
 ## Getting Started
 
-Install docker:
+Install docker engine:
 
 [Install docker engine](https://docs.docker.com/engine/install/)
 
-and docker-engine:
+and docker-compose:
 
 [Install docker-compose](https://docs.docker.com/compose/install/)
 
@@ -25,14 +25,19 @@ POSTGRES_USER=your_postgres_user
 POSTGRES_PASSWORD=your_postgres_password
 DB_HOST=db
 DB_PORT=5432
+NGINX_HOST=127.0.0.1
+NGINX_PORT=80
 ```
+
+if you want your app to run locally - leave NGINX_HOST as it is in example,
+otherwise provide your server's public ip or domain name
 
 ### Deploying
 
 Open terminal to create and start new containers with docker-compose:
 
 ```
-sudo docker-compose up -d
+sudo docker-compose pull && sudo docker-compose up -d
 ```
 
 (Optionally) Fill your database with test data from fixtures.json:
@@ -56,7 +61,7 @@ and follow the further instructions.
 Your service is available on
 
 ```
-http://127.0.0.1/api/v1/
+http://NGINX_HOST:NGINX_PORT/api/v1/
 ```
 
 try to fetch some data from resources.
@@ -64,7 +69,7 @@ try to fetch some data from resources.
 Admin page is available at
 
 ```
-http://127.0.0.1/admin/
+http://NGINX_HOST:NGINX_PORT/admin/
 ```
 
 You can inspect database using db service:

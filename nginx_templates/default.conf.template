@@ -1,6 +1,6 @@
 server {
-    listen 80;
-    server_name 188.227.85.17;
+    listen ${NGINX_PORT};
+    server_name ${NGINX_HOST};
 
     location /static/ {
         root /code/;
